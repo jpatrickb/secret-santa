@@ -250,7 +250,7 @@ app.get('/api/groups/:groupId', authMiddleware, async (req: AuthRequest, res: Re
       return res.status(404).json({ error: 'Group not found' });
     }
 
-    const isMember = group.members.some(m => m.userId === userId);
+    const isMember = group.members.some((m: any) => m.userId === userId);
     if (!isMember) {
       return res.status(403).json({ error: 'Not a member of this group' });
     }
@@ -276,7 +276,7 @@ app.post('/api/groups/:inviteCode/join', authMiddleware, async (req: AuthRequest
       return res.status(404).json({ error: 'Invalid invite code' });
     }
 
-    const alreadyMember = group.members.some(m => m.userId === userId);
+    const alreadyMember = group.members.some((m: any) => m.userId === userId);
     if (alreadyMember) {
       return res.status(400).json({ error: 'Already a member of this group' });
     }
@@ -387,7 +387,7 @@ app.post('/api/groups/:groupId/assignments/generate', authMiddleware, async (req
       return res.status(404).json({ error: 'Group not found' });
     }
 
-    const memberIds = group.members.map(m => m.userId);
+    const memberIds = group.members.map((m: any) => m.userId);
 
     if (memberIds.length < 2) {
       return res.status(400).json({ error: 'Need at least 2 members to generate assignments' });
@@ -673,7 +673,7 @@ app.get('/api/groups/:groupId/wishlist', authMiddleware, async (req: AuthRequest
     });
 
     // Filter out claim information for the item owner
-    const filteredItems = items.map(item => {
+    const filteredItems = items.map((item: any) => {
       if (item.userId === userId) {
         // Hide claim details from the owner
         return {
